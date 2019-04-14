@@ -1,0 +1,18 @@
+{
+    "config": {
+        "sort-packages": true
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+        "mockery/mockery": "^1.2",
+        "phpcompatibility/phpcompatibility-wp": "^2.0",
+        "phpunit/phpunit": "^7.5.8",
+        "wp-coding-standards/wpcs": "^2.1"
+    },
+    "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage-report"
+    }
+}

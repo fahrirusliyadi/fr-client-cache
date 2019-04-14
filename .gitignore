@@ -1,0 +1,11 @@
+/coverage-report/
+/node_modules/
+/vendor/
+/phpcs.xml
+/phpunit.xml
+/wp-cli.local.yml
+.DS_Store
+Thumbs.db
+*.sql
+*.tar.gz
+*.zip
