@@ -2,8 +2,8 @@
 Contributors: fahrirusliyadi
 Donate link: https://paypal.me/FahriRusliyadi
 Tags: cache, client, browser
-Requires at least: 4.5
-Tested up to: 5.0.4
+Requires at least: 4.9.10
+Tested up to: 5.1.1
 Stable tag: 0.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
