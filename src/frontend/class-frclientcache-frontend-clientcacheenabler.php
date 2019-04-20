@@ -62,7 +62,7 @@ class FrClientCache_Frontend_ClientCacheEnabler {
 
 		$last_modified = $this->get_last_modified();
 		if ( $last_modified ) {
-			$max_age                  = (int) $this->get_max_cache_age();
+			$max_age                  = (int) FRCLIENTCACHE_MAX_AGE;
 			$headers['Last-Modified'] = $last_modified;
 			$headers['Cache-Control'] = "public, max-age=$max_age, must-revalidate";
 		}
@@ -112,24 +112,21 @@ class FrClientCache_Frontend_ClientCacheEnabler {
 	 * @return string|bool Server last content modified date or false on failure.
 	 */
 	private function get_last_modified() {
-		$last_comment_modified   = get_lastcommentmodified( 'GMT' );
-		$last_post_modified      = get_lastpostmodified( 'GMT' );
-		$last_modified           = strtotime( $last_comment_modified ) > strtotime( $last_post_modified ) ? $last_comment_modified : $last_post_modified;
-		$last_modified_formatted = mysql2date( 'D, d M Y H:i:s', $last_modified, false );
+		$last_modified = get_lastpostmodified( 'GMT' );
+		if ( ! $last_modified ) {
+			return false;
+		}
 
-		if ( $last_modified_formatted ) {
-			$last_modified_formatted .= ' GMT';
+		$last_comment_modified = get_lastcommentmodified( 'GMT' );
+		if ( false !== $last_comment_modified ) {
+			$last_modified = strtotime( $last_comment_modified ) > strtotime( $last_modified ) ? $last_comment_modified : $last_modified;
+		}
+
+		$last_modified_formatted = mysql2date( 'D, d M Y H:i:s', $last_modified, false );
+		if ( false !== $last_modified_formatted ) {
+			$last_modified_formatted . ' GMT';
 		}
 
 		return $last_modified_formatted;
-	}
-
-	/**
-	 * Get max cache age.
-	 *
-	 * @return string
-	 */
-	private function get_max_cache_age() {
-		return defined( 'FRBROWSERCACHE_MAX_AGE' ) ? FRBROWSERCACHE_MAX_AGE : HOUR_IN_SECONDS;
 	}
 }

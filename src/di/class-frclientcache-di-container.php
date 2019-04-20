@@ -27,7 +27,7 @@ class FrClientCache_DI_Container {
 	/**
 	 * Invokables definitions.
 	 *
-	 * @var type
+	 * @var array
 	 */
 	private $invokables = array();
 

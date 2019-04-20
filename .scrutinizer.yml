@@ -1,0 +1,33 @@
+build:
+    nodes:
+        analysis:
+            dependencies:
+                before:
+                    - composer require --dev johnpbloch/wordpress
+            tests:
+                override:
+                    - php-scrutinizer-run
+                    - phpcs-run --standard=.phpcs.xml.dist
+        coverage:
+            services:
+                mariadb: 10.3
+            tests:
+                before:
+                    - bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 latest
+                override:
+                    - 
+                        command: vendor/bin/phpunit --coverage-clover coverage-report/coverage.xml
+                        coverage:
+                            file: coverage-report/coverage.xml
+                            format: clover
+    environment:
+        php:
+            version: "7.3"
+filter:    
+    dependency_paths:
+        - wordpress/
+    excluded_paths:
+        - 'tests/*'
+        - 'bin/*'
+checks:
+    php: true

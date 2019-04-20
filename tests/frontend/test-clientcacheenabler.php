@@ -72,17 +72,33 @@ class ClientCacheEnabler extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Cache enabled test.
+	 * Cache enabled test using last post modified date.
 	 */
-	public function test_cache_enabled() {
-		// Create a post so we can get last modified date.
-		$this->factory()->post->create();
+	public function test_cache_enabled_using_last_post_date() {
+		$post_id = $this->factory()->post->create();
+		$post    = get_post( $post_id );
 
 		$request = new FrClientCache_HTTP_ServerRequest();
 		$service = new FrClientCache_Frontend_ClientCacheEnabler( $request );
 		$headers = $service->add_cache_headers( array() );
 
-		$this->assertArrayHasKey( 'Last-Modified', $headers );
+		$this->assertSame( strtotime( $post->post_modified_gmt ), strtotime( $headers['Last-Modified'] ) );
+		$this->assertArrayHasKey( 'Cache-Control', $headers );
+	}
+
+	/**
+	 * Cache enabled test using last comment modified date.
+	 */
+	public function test_cache_enabled_using_last_comment_date() {
+		$post_id    = $this->factory()->post->create();
+		$comment_id = $this->factory()->comment->create();
+		$comment    = get_comment( $comment_id );
+
+		$request = new FrClientCache_HTTP_ServerRequest();
+		$service = new FrClientCache_Frontend_ClientCacheEnabler( $request );
+		$headers = $service->add_cache_headers( array() );
+
+		$this->assertSame( strtotime( $comment->comment_date_gmt ), strtotime( $headers['Last-Modified'] ) );
 		$this->assertArrayHasKey( 'Cache-Control', $headers );
 	}
 

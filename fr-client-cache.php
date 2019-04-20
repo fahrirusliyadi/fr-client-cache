@@ -52,8 +52,13 @@ spl_autoload_register( 'frclientcache_autoload' );
  * @access private
  */
 function frclientcache_run() {
-	$config            = require plugin_dir_path( __FILE__ ) . 'config/dependencies.php';
-	$container_factory = new FrClientCache_DI_ContainerFactory( $config );
+	$dir = plugin_dir_path( __FILE__ );
+
+	// Load constants.
+	require $dir . 'config/constants.php';
+
+	$container_config  = require $dir . 'config/dependencies.php';
+	$container_factory = new FrClientCache_DI_ContainerFactory( $container_config );
 	$container         = $container_factory->create();
 
 	$plugin = $container->get( 'FrClientCache_Plugin' );

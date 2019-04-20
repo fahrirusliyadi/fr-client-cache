@@ -30,7 +30,7 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<!-- Value: replace the function, class, and variable prefixes used. Separate multiple prefixes with a comma. -->
-			<property name="prefixes" type="array" value="frclientcache,FrClientCache,_frclientcache"/>
+			<property name="prefixes" type="array" value="FRCLIENTCACHE,FrClientCache,frclientcache,_frclientcache"/>
 		</properties>
 	</rule>
 	<rule ref="WordPress.WP.I18n">
